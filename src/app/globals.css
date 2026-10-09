@@ -1,0 +1,220 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: var(--font-sans), system-ui, -apple-system, sans-serif;
+  --font-serif: var(--font-serif), Georgia, serif;
+  --font-script: var(--font-script), cursive;
+
+  /* Bảng màu thống nhất toàn trang */
+  --color-cream: #FBF6EF;
+  --color-warm: #F5ECE1;
+  --color-sand: #EFE3D4;
+  --color-peach: #F3D9C6;
+  --color-sage: #CAD3BC;
+  --color-sage-deep: #A9B898;
+  --color-terracotta: #CF6847;
+  --color-terracotta-hover: #B9573A;
+  --color-terracotta-soft: #E3A07E;
+  --color-cocoa: #5A3A28;
+  --color-ink: #2D2622;
+  --color-muted: #6E6056;
+  --color-line: #EADBCE;
+}
+
+/* Cuộn mượt được xử lý bằng JS (src/lib/smoothScroll.js) để kiểm soát tốc độ & vị trí dừng */
+html {
+  scroll-behavior: auto;
+}
+
+body {
+  background-color: var(--color-cream);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  overflow-x: hidden;
+}
+
+.font-serif {
+  font-family: var(--font-serif);
+  /* Playfair mặc định dùng số kiểu cổ (số 4 tụt dòng) → ép số thẳng hàng */
+  font-variant-numeric: lining-nums;
+}
+
+.font-brand {
+  font-family: var(--font-quicksand), var(--font-sans), sans-serif;
+}
+
+.font-script {
+  font-family: var(--font-script);
+}
+
+/* Nút dùng chung */
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  border-radius: 9999px;
+  background: var(--color-terracotta);
+  color: #fff;
+  font-weight: 500;
+  font-size: 0.875rem;
+  padding: 0.8rem 1.6rem;
+  box-shadow: 0 8px 20px -10px rgba(207, 104, 71, 0.7);
+  transition: background-color 0.25s, transform 0.25s, box-shadow 0.25s;
+  cursor: pointer;
+}
+.btn-primary:hover {
+  background: var(--color-terracotta-hover);
+  transform: translateY(-2px);
+  box-shadow: 0 12px 24px -10px rgba(207, 104, 71, 0.8);
+}
+
+.btn-outline {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  border-radius: 9999px;
+  background: rgba(255, 255, 255, 0.7);
+  color: var(--color-ink);
+  border: 1.5px solid #3D332D;
+  font-weight: 500;
+  font-size: 0.875rem;
+  padding: 0.75rem 1.5rem;
+  transition: all 0.25s;
+  cursor: pointer;
+}
+.btn-outline:hover {
+  border-color: var(--color-terracotta);
+  color: var(--color-terracotta);
+  transform: translateY(-2px);
+}
+
+.link-arrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-terracotta);
+  border-bottom: 1.5px solid currentColor;
+  padding-bottom: 2px;
+  transition: gap 0.25s, color 0.25s;
+}
+.link-arrow:hover {
+  gap: 0.75rem;
+  color: var(--color-terracotta-hover);
+}
+
+.card-soft {
+  background: rgba(255, 255, 255, 0.82);
+  border: 1px solid rgba(234, 219, 206, 0.9);
+  box-shadow: 0 10px 30px -18px rgba(90, 58, 40, 0.35);
+}
+
+.scrollbar-none {
+  scrollbar-width: none;
+}
+.scrollbar-none::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hoạt ảnh nhẹ */
+@keyframes floatGentle {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+.animate-float {
+  animation: floatGentle 4s ease-in-out infinite;
+}
+
+@keyframes swayLeaf {
+  0%, 100% { rotate: 0deg; }
+  50% { rotate: 2.5deg; }
+}
+.animate-sway {
+  transform-origin: bottom left;
+  animation: swayLeaf 6s ease-in-out infinite;
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: none; }
+}
+.animate-fade-in {
+  animation: fadeInUp 0.5s ease-out both;
+}
+
+/* ==========================================================================
+   HIỆU ỨNG XUẤT HIỆN KHI CUỘN (2 chiều) — điều khiển bởi ScrollEffects.jsx
+   data-reveal="<kiểu>"  +  data-reveal-delay="<ms>" (tuỳ chọn)
+   ========================================================================== */
+[data-reveal] {
+  --rv-dur: 900ms;
+  --rv-ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --rv-delay-now: 0ms;
+  opacity: 0;
+  transition:
+    opacity var(--rv-dur) var(--rv-ease) var(--rv-delay-now),
+    transform var(--rv-dur) var(--rv-ease) var(--rv-delay-now),
+    filter var(--rv-dur) var(--rv-ease) var(--rv-delay-now),
+    clip-path var(--rv-dur) var(--rv-ease) var(--rv-delay-now),
+    /* giữ nguyên tốc độ hover của Tailwind */
+    translate 0.3s ease, scale 0.3s ease, rotate 0.3s ease,
+    box-shadow 0.3s ease, background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+}
+[data-reveal].is-revealed {
+  --rv-delay-now: var(--reveal-delay, 0ms);
+  opacity: 1;
+  transform: none;
+  filter: none;
+  clip-path: inset(0 0 0 0 round 0);
+}
+
+/* Hero — chữ hiện dần từ mờ nhoè, ảnh trôi vào từ phải */
+[data-reveal="hero-text"] { transform: translateY(28px); filter: blur(8px); --rv-dur: 1000ms; }
+[data-reveal="hero-image"] { transform: translateX(60px) scale(1.04); --rv-dur: 1300ms; }
+
+/* The Moment — ảnh mở như tấm rèm, thẻ "viên sỏi" nảy lên */
+[data-reveal="moment-curtain"] { opacity: 0.15; clip-path: inset(0 100% 0 0 round 0); --rv-dur: 1300ms; }
+[data-reveal="moment-text"] { transform: translateX(-40px); }
+[data-reveal="moment-pebble"] { transform: translateY(40px) scale(0.8); --rv-ease: cubic-bezier(0.34, 1.56, 0.64, 1); --rv-dur: 800ms; }
+[data-reveal="moment-note"] { transform: translateY(-16px) rotate(-4deg); filter: blur(4px); }
+
+/* Khám phá phòng — tiêu đề rơi xuống, ảnh lớn thu về từ cận cảnh, 2 cột trượt vào */
+[data-reveal="rooms-head"] { transform: translateY(-30px); }
+[data-reveal="rooms-list"] { transform: translateX(-50px); }
+[data-reveal="rooms-photo"] { transform: scale(1.08); filter: blur(10px); --rv-dur: 1200ms; }
+[data-reveal="rooms-info"] { transform: translateX(50px); }
+
+/* Bảng giá — thẻ lật từ dưới lên như lá bài */
+[data-reveal="price-head"] { transform: translateX(-40px); }
+[data-reveal="price-card"] { transform: perspective(900px) rotateX(55deg) translateY(30px); transform-origin: 50% 100%; --rv-dur: 850ms; }
+[data-reveal="price-note"] { transform: scaleX(0.4); transform-origin: 0 50%; }
+
+/* Trải nghiệm — dải nền mở rộng, thẻ trồi lên có nảy nhẹ */
+[data-reveal="exp-head"] { transform: translateY(30px); filter: blur(6px); }
+[data-reveal="exp-band"] { transform: scaleX(0.85); opacity: 0; --rv-dur: 1100ms; }
+[data-reveal="exp-card"] { transform: translateY(70px); --rv-ease: cubic-bezier(0.34, 1.4, 0.64, 1); --rv-dur: 950ms; }
+
+/* Mood — thẻ xoè ra như quạt bài */
+[data-reveal="mood-head"] { transform: translateX(-36px); }
+[data-reveal="mood-card-l"] { transform: translateY(50px) rotate(-7deg); transform-origin: 50% 120%; }
+[data-reveal="mood-card-r"] { transform: translateY(50px) rotate(7deg); transform-origin: 50% 120%; }
+
+/* 3 cơ sở — thẻ trượt từ trái, bản đồ hiện rõ dần như in mực */
+[data-reveal="loc-head"] { transform: translateY(24px); }
+[data-reveal="loc-card"] { transform: translateX(-60px); }
+[data-reveal="loc-map"] { transform: scale(0.92) rotate(-2deg); filter: blur(12px) saturate(0.4); --rv-dur: 1300ms; }
+
+/* Banner tối — chữ bay vào từ 2 phía */
+[data-reveal="banner-left"] { transform: translateX(-60px); filter: blur(6px); }
+[data-reveal="banner-right"] { transform: translateX(60px) rotate(3deg); filter: blur(6px); }
+
+/* Footer */
+[data-reveal="footer"] { transform: translateY(24px); }
+
+/* Hoạ tiết trang trí — nở nhẹ */
+[data-reveal="decor"] { transform: translateY(14px) scale(0.96); --rv-dur: 1200ms; }
